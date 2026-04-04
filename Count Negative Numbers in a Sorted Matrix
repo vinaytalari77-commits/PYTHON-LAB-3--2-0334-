@@ -1,0 +1,21 @@
+import bisect
+
+class Solution:
+    def countNegatives(self, grid: List[List[int]]) -> int:
+        count = 0
+        
+        for row in grid:
+            # Binary search to find first index where value < 0
+            # Since row is sorted descending, we search for first negative
+            left, right = 0, len(row)
+            while left < right:
+                mid = (left + right) // 2
+                if row[mid] < 0:
+                    right = mid
+                else:
+                    left = mid + 1
+            # left is the index of first negative
+            count += len(row) - left
+        
+        return count
+
