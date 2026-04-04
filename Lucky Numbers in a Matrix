@@ -1,0 +1,17 @@
+class Solution:
+    def luckyNumbers(self, matrix: List[List[int]]) -> List[int]:
+        m, n = len(matrix), len(matrix[0])
+        lucky = []
+        
+        for i in range(m):
+            # Find minimum in row i
+            row_min = min(matrix[i])
+            row_min_index = matrix[i].index(row_min)
+            
+            # Check if it's the maximum in its column
+            col_max = max(matrix[j][row_min_index] for j in range(m))
+            
+            if row_min == col_max:
+                lucky.append(row_min)
+        
+        return lucky
