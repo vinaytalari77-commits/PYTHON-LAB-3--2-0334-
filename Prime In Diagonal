@@ -1,0 +1,33 @@
+class Solution:
+    def diagonalPrime(self, nums: List[List[int]]) -> int:
+        n = len(nums)
+        max_prime = 0
+        
+        # Function to check if a number is prime
+        def is_prime(num: int) -> bool:
+            if num < 2:
+                return False
+            if num == 2:
+                return True
+            if num % 2 == 0:
+                return False
+            # Check odd divisors up to sqrt(num)
+            for i in range(3, int(num ** 0.5) + 1, 2):
+                if num % i == 0:
+                    return False
+            return True
+        
+        # Check primary diagonal
+        for i in range(n):
+            val = nums[i][i]
+            if val > max_prime and is_prime(val):
+                max_prime = val
+        
+        # Check secondary diagonal
+        for i in range(n):
+            val = nums[i][n - 1 - i]
+            if val > max_prime and is_prime(val):
+                max_prime = val
+        
+        return max_prime
+
