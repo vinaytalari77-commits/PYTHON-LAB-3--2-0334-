@@ -1,0 +1,64 @@
+class Solution:
+    
+    def flipAndInvertImage(self, image):
+        n = len(image)
+        
+        for row in image:
+            left, right = 0, n - 1
+            while left <= right:
+                if left == right:
+                    row[left] ^= 1
+                else:
+                    row[left], row[right] = row[right] ^ 1, row[left] ^ 1
+                left += 1
+                right -= 1
+        
+        return image
+    
+    # Pythonic version (returns new matrix)
+    def flipAndInvertImagePythonic(self, image):
+        return [[1 ^ val for val in row[::-1]] for row in image]
+
+def main():
+    sol = Solution()
+    
+    # Test case 1
+    img1 = [[1,1,0],
+            [1,0,1],
+            [0,0,0]]
+    print("Input:")
+    for row in img1:
+        print(row)
+    result1 = sol.flipAndInvertImage([row[:] for row in img1])  # Pass a copy
+    print("Output:")
+    for row in result1:
+        print(row)
+    print()
+    
+    # Test case 2
+    img2 = [[1,1,0,0],
+            [1,0,0,1],
+            [0,1,1,1],
+            [1,0,1,0]]
+    print("Input:")
+    for row in img2:
+        print(row)
+    result2 = sol.flipAndInvertImage([row[:] for row in img2])
+    print("Output:")
+    for row in result2:
+        print(row)
+    print()
+    
+    # Test case 3 (single element)
+    img3 = [[0]]
+    print("Input:", img3)
+    result3 = sol.flipAndInvertImage(img3)
+    print("Output:", result3)
+    print()
+    
+    # Using Pythonic version
+    print("Pythonic version result (Test case 1):")
+    print(sol.flipAndInvertImagePythonic(img1))
+
+if __name__ == "__main__":
+    main()
