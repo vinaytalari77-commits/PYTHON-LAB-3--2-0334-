@@ -1,0 +1,30 @@
+class Solution:
+   
+    def numRookCaptures(self, board):
+        # Step 1: Find the rook's position
+        rook_r = rook_c = -1
+        for i in range(8):
+            for j in range(8):
+                if board[i][j] == 'R':
+                    rook_r, rook_c = i, j
+                    break
+            if rook_r != -1:
+                break
+        
+        # Step 2: Check four directions
+        directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]  # up, down, left, right
+        captures = 0
+        
+        for dr, dc in directions:
+            r, c = rook_r + dr, rook_c + dc
+            while 0 <= r < 8 and 0 <= c < 8:
+                if board[r][c] == 'p':  # Pawn found
+                    captures += 1
+                    break
+                elif board[r][c] != '.':  # Bishop or other blocking piece
+                    break
+                # Continue moving in the same direction
+                r += dr
+                c += dc
+        
+        return captures
