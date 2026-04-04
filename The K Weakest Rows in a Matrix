@@ -1,0 +1,16 @@
+from typing import List
+
+class Solution:
+    def kWeakestRows(self, mat: List[List[int]], k: int) -> List[int]:
+        # List of (soldier_count, row_index)
+        row_strength = []
+        
+        for i, row in enumerate(mat):
+            soldier_count = row.count(1)
+            row_strength.append((soldier_count, i))
+        
+        # Sort by soldier_count, then by row_index
+        row_strength.sort()
+        
+        # Return first k row indices
+        return [row_strength[i][1] for i in range(k)]
