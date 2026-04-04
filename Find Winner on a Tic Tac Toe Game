@@ -1,0 +1,33 @@
+class Solution:
+    def tictactoe(self, moves: List[List[int]]) -> str:
+
+        # All possible winning lines in Tic Tac Toe
+        wins = [
+            [(0,0), (0,1), (0,2)],  # top row
+            [(1,0), (1,1), (1,2)],  # middle row
+            [(2,0), (2,1), (2,2)],  # bottom row
+            [(0,0), (1,0), (2,0)],  # left column
+            [(0,1), (1,1), (2,1)],  # middle column
+            [(0,2), (1,2), (2,2)],  # right column
+            [(0,0), (1,1), (2,2)],  # main diagonal
+            [(0,2), (1,1), (2,0)]   # anti-diagonal
+        ]
+        
+        # Separate moves for A and B
+        A = set(tuple(moves[i]) for i in range(0, len(moves), 2))
+        B = set(tuple(moves[i]) for i in range(1, len(moves), 2))
+        
+        # Check if A wins
+        for w in wins:
+            if all(pos in A for pos in w):
+                return "A"
+        
+        # Check if B wins
+        for w in wins:
+            if all(pos in B for pos in w):
+                return "B"
+        
+        # No winner
+        if len(moves) == 9:
+            return "Draw"
+        return "Pending"
