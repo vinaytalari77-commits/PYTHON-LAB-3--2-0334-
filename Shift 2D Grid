@@ -1,0 +1,104 @@
+class Solution:
+
+    def shiftGrid(self, grid, k):
+        m, n = len(grid), len(grid[0])
+        total = m * n
+        k = k % total
+        
+        if k == 0:
+            return grid
+        
+        # Flatten
+        flat = []
+        for row in grid:
+            flat.extend(row)
+        
+        # Rotate right
+        flat = flat[-k:] + flat[:-k]
+        
+        # Reshape
+        result = []
+        for i in range(m):
+            result.append(flat[i * n:(i + 1) * n])
+        
+        return result
+    
+    # Method 2: Direct index mapping
+    def shiftGridDirect(self, grid, k):
+        m, n = len(grid), len(grid[0])
+        total = m * n
+        k = k % total
+        
+        if k == 0:
+            return grid
+        
+        result = [[0] * n for _ in range(m)]
+        
+        for i in range(m):
+            for j in range(n):
+                old_index = i * n + j
+                new_index = (old_index + k) % total
+                new_i = new_index // n
+                new_j = new_index % n
+                result[new_i][new_j] = grid[i][j]
+        
+        return result
+
+def main():
+    sol = Solution()
+    
+    # Test case 1
+    grid1 = [[1,2,3],
+             [4,5,6],
+             [7,8,9]]
+    print("Input:")
+    for row in grid1:
+        print(row)
+    print(f"k = 1")
+    print("Output:")
+    for row in sol.shiftGrid(grid1, 1):
+        print(row)
+    print()
+    
+    # Test case 2
+    grid2 = [[3,8,1,9],
+             [19,7,2,5],
+             [4,6,11,10],
+             [12,0,21,13]]
+    print("Input:")
+    for row in grid2:
+        print(row)
+    print(f"k = 4")
+    print("Output:")
+    for row in sol.shiftGrid(grid2, 4):
+        print(row)
+    print()
+    
+    # Test case 3
+    grid3 = [[1,2,3],
+             [4,5,6],
+             [7,8,9]]
+    print("Input:")
+    for row in grid3:
+        print(row)
+    print(f"k = 9")
+    print("Output:")
+    for row in sol.shiftGrid(grid3, 9):
+        print(row)
+    print()
+    
+    # Test case 4 (single row)
+    grid4 = [[1,2,3,4,5]]
+    print("Input:", grid4)
+    print(f"k = 2")
+    print("Output:", sol.shiftGrid(grid4, 2))
+    print()
+    
+    # Test case 5 (single column)
+    grid5 = [[1], [2], [3], [4]]
+    print("Input:", grid5)
+    print(f"k = 3")
+    print("Output:", sol.shiftGrid(grid5, 3))
+
+if __name__ == "__main__":
+    main()
